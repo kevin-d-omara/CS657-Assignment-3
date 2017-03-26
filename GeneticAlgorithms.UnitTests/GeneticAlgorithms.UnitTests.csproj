@@ -43,9 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChromosomeTest.cs" />
     <Compile Include="PointTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RouteChromosomeTest.cs" />
+    <Compile Include="RouteTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

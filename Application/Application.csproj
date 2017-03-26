@@ -38,6 +38,10 @@
     <Compile Include="Driver.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GeneticAlgorithms.UnitTests\GeneticAlgorithms.UnitTests.csproj">
+      <Project>{a1a71a7f-2778-4e2c-9c78-87343a757f91}</Project>
+      <Name>GeneticAlgorithms.UnitTests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GeneticAlgorithms\GeneticAlgorithms.csproj">
       <Project>{f1c9867c-e1c5-4bf7-b2d6-f0363fe72d41}</Project>
       <Name>GeneticAlgorithms</Name>
