@@ -33,7 +33,7 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms.UnitTests
             Assert.AreEqual(home,  chromo.Home);
 
             Assert.AreEqual(3, chromo.Length);
-            Assert.AreEqual(4f, chromo.Fitness);
+            Assert.AreEqual(-4f, chromo.Fitness);
 
             Assert.AreEqual(1, chromo.Genes[1].x);
             Assert.AreEqual(1, chromo.Genes[1].y);

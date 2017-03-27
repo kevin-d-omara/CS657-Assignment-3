@@ -15,7 +15,7 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         public int Length { get; private set; }
 
         /// <summary>
-        /// Total distance of the route.
+        /// Negative of the total route distance (i.e. 0 == shortest route).
         /// </summary>
         public float Fitness { get; private set; }
 
@@ -33,7 +33,7 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
                 _genes = value;
                 Length = _genes.Length;
                 Route = new Route(Home, _genes);
-                Fitness = Route.TotalDistance;
+                Fitness = -Route.TotalDistance;
             }
         }
         private Point[] _genes;
