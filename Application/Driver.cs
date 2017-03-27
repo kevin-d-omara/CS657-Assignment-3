@@ -10,10 +10,11 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
     {
         public static void Main(string[] args)
         {
-            RouteTest myTest = new RouteTest();
+            var myTest = new GenerationTest();
             myTest.SetUp();
-            myTest.Constructor_NonCircular_ValidParameters();
-            myTest.Constructor_Circular_ValidParameters();
+            myTest.Constructor_ValidParameters();
+
+            //Console.ReadKey();
         }
     }
 }

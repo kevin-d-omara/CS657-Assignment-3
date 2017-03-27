@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CrossoverTest.cs" />
+    <Compile Include="GenerationTest.cs" />
+    <Compile Include="GeneTest.cs" />
     <Compile Include="GeneticOperatorsTest.cs" />
     <Compile Include="PointTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

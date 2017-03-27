@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Gene.cs" />
+    <Compile Include="Generation.cs" />
     <Compile Include="GeneticOperators.cs" />
     <Compile Include="IChromosome.cs" />
     <Compile Include="Point.cs" />
