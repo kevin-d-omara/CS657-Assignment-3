@@ -43,18 +43,44 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms.UnitTests
             var cloneA = GeneticOperators.Clone(parentA);
 
             // Modify original chromosome, but clone is untouched.
-            var genesA2 = (Point[])genesA.Clone();
-            genesA2[0] = new Point(7, 7);
-            parentA = new RouteChromosome(homeA, genesA2);
-
+            parentA.Genes[0] = new Point(7, 7);
             Assert.AreNotEqual(parentA.Genes[0], cloneA.Genes[0]);
-            Assert.AreNotEqual(parentA.Fitness, cloneA.Fitness);
+
+            // Note: Direct modification of Chromosome.Genes, .Route, etc. is not supported. Thus,
+            // parentA.Fitness is NOT updated to reflect the change of parentA.Genes[0].
+            //Assert.AreNotEqual(parentA.Fitness, cloneA.Fitness);
         }
 
         [Test]
         public void Mutate()
         {
-            // TODO
+            // Hand picked seed such that:
+            // parentA = (a, b, c)
+            // mutantA = (a, c, b)
+            RandomizationProvider.random = new Random(7);
+            RouteChromosome mutantA = GeneticOperators.Mutate(parentA);
+
+            // Check all points are still there.
+            var genesInA = new HashSet<Point>(parentA.Genes);
+            foreach(Point gene in parentA.Genes)
+            {
+                Assert.IsTrue(genesInA.Contains(gene));
+            }
+
+            // Check that only two points have swapped and correspond to parent.
+            var numberOfDifferentGenes = 0;
+            var length = parentA.Genes.Length;
+            for (int i = 0; i < length; ++i)
+            {
+                if (parentA.Genes[i] != mutantA.Genes[i])
+                {
+                    ++numberOfDifferentGenes;
+                }
+            }
+            Assert.AreEqual(2, numberOfDifferentGenes);
+
+            // Note: it is possible for the "swapped" genes to have the same index. In this case,
+            // Mutate() acts like Clone().
         }
     }
 }
