@@ -35,13 +35,13 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms.UnitTests
             Assert.AreEqual(3, chromo.Length);
             Assert.AreEqual(4f, chromo.Fitness);
 
-            Assert.AreEqual(1, chromo.Genes[1].X);
-            Assert.AreEqual(1, chromo.Genes[1].Y);
+            Assert.AreEqual(1, chromo.Genes[1].x);
+            Assert.AreEqual(1, chromo.Genes[1].y);
 
             Assert.AreEqual(home, chromo.Home);
 
-            Assert.AreEqual(1, chromo.Route.Points[2].X);
-            Assert.AreEqual(1, chromo.Route.Points[2].Y);
+            Assert.AreEqual(1, chromo.Route.Points[2].x);
+            Assert.AreEqual(1, chromo.Route.Points[2].y);
         }
     }
 }
