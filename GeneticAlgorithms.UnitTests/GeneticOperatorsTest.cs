@@ -2,49 +2,38 @@
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms.UnitTests
 {
     [TestFixture]
     public class GeneticOperatorsTest
     {
-        RouteChromosome parentA;
-        RouteChromosome parentB;
-        Point homeA;
-        Point homeB;
-        Point[] genesA;
-        Point[] genesB;
+        RouteChromosome parent;
+        Point home;
+        Point[] genes;
 
         [SetUp]
         public void SetUp()
         {
-            homeA = new Point(0, 0);
-            homeB = new Point(2, 0);
-            genesA = new Point[]
+            home = new Point(0, 0);
+            genes = new Point[]
             {
                 new Point(1, 0),
                 new Point(1, 1),
                 new Point(0, 1)
             };
-            genesB = new Point[]
-            {
-                new Point(4, 0),
-                new Point(4, 2),
-                new Point(2, 2)
-            };
-
-            parentA = new RouteChromosome(homeA, genesA);
-            parentB = new RouteChromosome(homeB, genesB);
+            parent = new RouteChromosome(home, genes);
         }
 
         [Test]
         public void Clone()
         {
-            var cloneA = GeneticOperators.Clone(parentA);
+            var cloneA = GeneticOperators.Clone(parent);
 
             // Modify original chromosome, but clone is untouched.
-            parentA.Genes[0] = new Point(7, 7);
-            Assert.AreNotEqual(parentA.Genes[0], cloneA.Genes[0]);
+            parent.Genes[0] = new Point(7, 7);
+            Assert.AreNotEqual(parent.Genes[0], cloneA.Genes[0]);
 
             // Note: Direct modification of Chromosome.Genes, .Route, etc. is not supported. Thus,
             // parentA.Fitness is NOT updated to reflect the change of parentA.Genes[0].
@@ -58,21 +47,21 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms.UnitTests
             // parentA = (a, b, c)
             // mutantA = (a, c, b)
             RandomizationProvider.random = new Random(7);
-            RouteChromosome mutantA = GeneticOperators.Mutate(parentA);
+            RouteChromosome mutantA = GeneticOperators.Mutate(parent);
 
             // Check all points are still there.
-            var genesInA = new HashSet<Point>(parentA.Genes);
-            foreach(Point gene in parentA.Genes)
+            var genesInA = new HashSet<Point>(parent.Genes);
+            foreach (Point gene in parent.Genes)
             {
                 Assert.IsTrue(genesInA.Contains(gene));
             }
 
             // Check that only two points have swapped and correspond to parent.
             var numberOfDifferentGenes = 0;
-            var length = parentA.Genes.Length;
+            var length = parent.Genes.Length;
             for (int i = 0; i < length; ++i)
             {
-                if (parentA.Genes[i] != mutantA.Genes[i])
+                if (parent.Genes[i] != mutantA.Genes[i])
                 {
                     ++numberOfDifferentGenes;
                 }
