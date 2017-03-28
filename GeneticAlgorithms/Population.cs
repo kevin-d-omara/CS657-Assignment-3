@@ -30,18 +30,20 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         public int Size { get; private set; }
 
         /// <summary>
-        /// The number of genes in each chromosome.
+        /// The city to find the shortest route in.
         /// </summary>
-        public int ChromosomeLength { get; private set; }
+        public City TheCity { get; private set; }
 
         /// <summary>
         /// Create a new population with a randomized first generation.
         /// </summary>
-        /// <param name="size">The number of chromosomes in each generation.</param>
-        /// <param name="chromosomeLength">The length of each chromosome.</param>
-        public Population(int size, int chromosomeLength)
+        /// <param name="size">Number of chromosomes in each generation.</param>
+        /// <param name="city">City to find the shortest route in.</param>
+        public Population(int size, City city)
         {
-
+            Size = size;
+            TheCity = city;
+            CreateFirstGeneration();
         }
 
         /// <summary>
@@ -51,6 +53,24 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         {
             // Use Selection to choose Size/2 pairs.
             // Use GeneticOperators to create children.
+        }
+
+        /// <summary>
+        /// Create a set of randomized chromosomes to make up the first generation.
+        /// </summary>
+        private void CreateFirstGeneration()
+        {
+            var chromosomes = new RouteChromosome[Size];
+            for (int i = 0; i < Size; ++i)
+            {
+                var shuffledLocations = Point.GetShuffledClone(TheCity.Homes);
+                var chromosome = new RouteChromosome(TheCity.Warehouse, shuffledLocations);
+                chromosomes[i] = chromosome;
+            }
+
+            var firstGeneration = new Generation(chromosomes);
+            Generations.Add(firstGeneration);
+            LatestGeneration = firstGeneration;
         }
     }
 }

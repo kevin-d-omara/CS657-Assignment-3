@@ -7,7 +7,7 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
     /// <summary>
     /// A possible solution (route) to the travelling salesman problem.
     /// </summary>
-    public class RouteChromosome : IChromosome
+    public class RouteChromosome
     {
         /// <summary>
         /// Number of points in the route (discluding start/end).

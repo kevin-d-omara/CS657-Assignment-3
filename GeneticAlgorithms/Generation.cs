@@ -12,7 +12,7 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         /// <summary>
         /// The list of chromosomes.
         /// </summary>
-        public IChromosome[] Chromosomes { get; private set; }
+        public RouteChromosome[] Chromosomes { get; private set; }
 
         /// <summary>
         /// Number of chromosomes in this generation.
@@ -22,15 +22,20 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         /// <summary>
         /// The most fit chromosome (i.e. the candidate solution).
         /// </summary>
-        public IChromosome FittestChromosome { get; private set; }
+        //public RouteChromosome FittestChromosome { get; private set; }
 
         /// <summary>
         /// Create a generation from the given set of chromosomes.
         /// </summary>
-        public Generation(List<IChromosome> chromosomes)
+        public Generation(RouteChromosome[] chromosomes)
         {
-            Number = chromosomes.Count;
-            Chromosomes = chromosomes.ToArray();
+            Number = chromosomes.Length;
+            Chromosomes = chromosomes;
         }
+
+        /// <summary>
+        /// Create a generation from the given set of chromosomes.
+        /// </summary>
+        public Generation(List<RouteChromosome> chromosomes) : this(chromosomes.ToArray()) { }
     }
 }

@@ -29,6 +29,26 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
             return (float)Math.Sqrt(xSquared + ySquared);
         }
 
+        /// <summary>
+        /// Return a randomly shuffled shallow copy.
+        /// </summary>
+        public static Point[] GetShuffledClone(Point[] points)
+        {
+            var length = points.Length;
+            var randomPoints = new Point[length];
+            var remainingPoints = new List<Point>(points);
+
+            for (int i = 0; i < length; ++i)
+            {
+                var index = RandomizationProvider.random.Next(remainingPoints.Count);
+                var point = remainingPoints[index];
+                randomPoints[i] = point;
+                remainingPoints.Remove(point);
+            }
+
+            return randomPoints;
+        }
+
         // Overriden operators (make comparison by value, not reference) ---------------------------
 
         /// <summary>
