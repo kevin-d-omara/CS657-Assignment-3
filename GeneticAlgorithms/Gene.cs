@@ -7,16 +7,16 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
     /// <summary>
     /// The atomic unit from which a chromosome is composed.
     /// </summary>
-    public class Gene<T> : IEquatable<T>
+    public class Gene : IEquatable<Gene>
     {
-        public readonly T value;
+        public readonly object value;
 
-        public Gene(T value)
+        public Gene(object value)
         {
             this.value = value;
         }
 
-        public bool Equals(T other)
+        public bool Equals(Gene other)
         {
             return value.Equals(other);
         }
