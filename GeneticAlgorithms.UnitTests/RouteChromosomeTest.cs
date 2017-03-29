@@ -10,33 +10,33 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms.UnitTests
     {
         RouteChromosome chromo;
         Point home;
-        Point[] genes;
+        Point[] points;
 
         [SetUp]
         public void SetUp()
         {
             home = new Point(0, 0);
-            genes = new Point[]
+            points = new Point[]
             {
                 new Point(1, 0),
                 new Point(1, 1),
                 new Point(0, 1)
             };
 
-            chromo = new RouteChromosome(home, genes);
+            chromo = new RouteChromosome(home, points);
         }
 
         [Test]
         public void Constructor_ValidParameters()
         {
-            Assert.AreEqual(genes, chromo.Genes);
             Assert.AreEqual(home,  chromo.Home);
 
             Assert.AreEqual(3, chromo.Length);
             Assert.AreEqual(-4f, chromo.Fitness);
 
-            Assert.AreEqual(1, chromo.Genes[1].x);
-            Assert.AreEqual(1, chromo.Genes[1].y);
+            var point = (Point)(chromo.GetGene(1).value);
+            Assert.AreEqual(1, point.x);
+            Assert.AreEqual(1, point.y);
 
             Assert.AreEqual(home, chromo.Home);
 

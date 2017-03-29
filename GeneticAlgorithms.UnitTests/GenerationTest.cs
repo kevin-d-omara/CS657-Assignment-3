@@ -8,37 +8,38 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms.UnitTests
     [TestFixture]
     public class GenerationTest
     {
-        Generation<RouteChromosome> generation;
+        Generation generation;
         List<RouteChromosome> chromosomeList = new List<RouteChromosome>();
 
         RouteChromosome chromoA, chromoB;
         Point home;
-        Point[] genesA, genesB;
+        Point[] pointsA, pointsB;
 
 
         [SetUp]
         public void SetUp()
         {
             home = new Point(0, 0);
-            genesA = new Point[]
+            pointsA = new Point[]
             {
                 new Point(1, 0),
                 new Point(1, 1),
                 new Point(0, 1)
             };
-            genesB = new Point[]
+            pointsB = new Point[]
             {
                 new Point(2, 0),
                 new Point(2, 2),
                 new Point(0, 2)
             };
-            chromoA = new RouteChromosome(home, genesA);
-            chromoB = new RouteChromosome(home, genesB);
+            chromoA = new RouteChromosome(home, pointsA);
+            chromoB = new RouteChromosome(home, pointsB);
 
             chromosomeList.Add(chromoA);
             chromosomeList.Add(chromoB);
 
-            generation = new Generation<RouteChromosome>(chromosomeList);
+            // TODO: finish setup
+            // generation = new Generation<RouteChromosome>(chromosomeList);
         }
 
         [Test]

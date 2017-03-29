@@ -16,11 +16,54 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
             this.value = value;
         }
 
-        public bool Equals(Gene other)
+        // Overriden operators (use 'value' variable for comparison) -------------------------------
+
+        /// <summary>
+        /// Return true if the value of this gene matches the value of the other gene.
+        /// </summary>
+        public static bool operator ==(Gene a, Gene b)
         {
-            return value.Equals(other);
+            return a.Equals(b);
         }
 
-        // TODO: override comparison operators (see Point.cs)
+        /// <summary>
+        /// Return false if the value of this gene matches the value of the other gene.
+        /// </summary>
+        public static bool operator !=(Gene a, Gene b)
+        {
+            return !(a == b);
+        }
+
+        /// <summary>
+        /// Return true if the value of this gene matches the value of the other gene.
+        /// </summary>
+        public bool Equals(Gene other)
+        {
+            return value.Equals(other.value);
+        }
+
+        /// <summary>
+        /// Return true if the other object is a Gene AND the value of this gene matches the value
+        /// of the other gene.
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            var otherPoint = obj as Gene;
+
+            if (obj == null || otherPoint == null)
+            {
+                return false;
+            }
+
+            return this == otherPoint;
+        }
+
+        /// <summary>
+        /// Return the hashcode of the value of this gene.
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return value.GetHashCode();
+        }
     }
 }

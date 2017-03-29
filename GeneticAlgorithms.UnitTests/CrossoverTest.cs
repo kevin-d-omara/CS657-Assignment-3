@@ -12,35 +12,35 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms.UnitTests
         RouteChromosome parentA, parentB;
         RouteChromosome childA , childB;
         Point           homeA  , homeB;
-        Point[]         genesA , genesB;
+        Point[]         pointsA , pointsB;
 
         [SetUp]
         public void SetUp()
         {
             homeA = new Point(0, 0);
             homeB = new Point(2, 0);
-            genesA = new Point[]
+            pointsA = new Point[]
             {
                 new Point(1, 0),
                 new Point(1, 1),
                 new Point(0, 1)
             };
-            genesB = new Point[]
+            pointsB = new Point[]
             {
                 new Point(4, 0),
                 new Point(4, 2),
                 new Point(2, 2)
             };
 
-            parentA = new RouteChromosome(homeA, genesA);
-            parentB = new RouteChromosome(homeB, genesB);
+            parentA = new RouteChromosome(homeA, pointsA);
+            parentB = new RouteChromosome(homeB, pointsB);
 
             // Hand picked seed such that:
             // parentA = (a, b, c)  parentB = (e, f, g)
             // childA  = (a, f, g)  childB  = (e, b, c)
             //               ^   breaking point   ^
             RandomizationProvider.random = new Random(1);
-            GeneticOperators.Crossover(parentA, parentB, out childA, out childB);
+            CrossoverConcrete(parentA, parentB, out childA, out childB);
         }
 
         [Test]
@@ -51,17 +51,17 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms.UnitTests
 
             // Unequal lengths.
             Assert.That(() =>
-                GeneticOperators.Crossover(parentA, shortRoute, out childA, out childB),
+                CrossoverConcrete(parentA, shortRoute, out childA, out childB),
                 Throws.ArgumentException);
 
             // Too short.
             RouteChromosome onePointRoute = new RouteChromosome(homeA, new Point[1] { homeB });
 
             Assert.That(() =>
-                GeneticOperators.Crossover(onePointRoute, onePointRoute, out childA, out childB),
+                CrossoverConcrete(onePointRoute, onePointRoute, out childA, out childB),
                 Throws.ArgumentException);
             Assert.That(() =>
-                GeneticOperators.Crossover(shortRoute, shortRoute, out childA, out childB),
+                CrossoverConcrete(shortRoute, shortRoute, out childA, out childB),
                 Throws.ArgumentException);
         }
 
@@ -91,11 +91,11 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms.UnitTests
             // parentA = (a, b, c)  parentB = (e, f, g)
             // childA  = (a, f, g)  childB  = (e, b, c)
             //               ^   breaking point   ^
-            var childA_R = childA.Genes.Skip(index);   // f, g
-            var parentB_R = parentB.Genes.Skip(index); // f, g
+            var childA_R = childA.GetGenes().Skip(index);   // f, g
+            var parentB_R = parentB.GetGenes().Skip(index); // f, g
 
-            var childB_R = childB.Genes.Skip(index);   // b, c
-            var parentA_R = parentA.Genes.Skip(index); // b, c
+            var childB_R = childB.GetGenes().Skip(index);   // b, c
+            var parentA_R = parentA.GetGenes().Skip(index); // b, c
 
             Assert.IsTrue(childA_R.SequenceEqual(parentB_R)); // { f, g } == { f, g }
             Assert.IsTrue(childB_R.SequenceEqual(parentA_R)); // { b, c } == { b , c}
@@ -104,15 +104,27 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms.UnitTests
 
         private int GetBreakingPoint(RouteChromosome parent, RouteChromosome child)
         {
-            var length = parent.Genes.Length;
+            var length = parent.Length;
             for (int i = 0; i < length; ++i)
             {
-                if (parent.Genes[i] != child.Genes[i])
+                if (parent.GetGene(i) != child.GetGene(i))
                 {
                     return i;
                 }
             }
             return -1;
+        }
+
+        /// <summary>
+        /// A wrapper for GeneticAlgorithms.Crossover(). Boxes and unboxes children so that the
+        /// function may be called.
+        /// </summary>
+        private void CrossoverConcrete<T>(T parentA, T parentB, out T childA, out T childB) where T : IChromosome
+        {
+            IChromosome tmpChildA, tmpChildB;
+            GeneticOperators.Crossover(parentA, parentB, out tmpChildA, out tmpChildB);
+            childA = (T)tmpChildA;
+            childB = (T)tmpChildB;
         }
     }
 }

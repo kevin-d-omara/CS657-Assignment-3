@@ -10,32 +10,19 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
     public class GeneticOperators
     {
         /// <summary>
-        /// Return a shallow copy of the chromosome.
-        /// </summary>
-        public static RouteChromosome Clone(RouteChromosome chromosome)
-        {
-            var genes = (Point[])chromosome.Genes.Clone();
-            var clone = new RouteChromosome(chromosome.Home, genes);
-
-            return clone;
-        }
-
-        /// <summary>
         /// Return a shallow copy of the chromosome with the position of two genes swapped.
         /// </summary>
-        public static RouteChromosome Mutate(RouteChromosome chromosome)
+        public static IChromosome Mutate(IChromosome chromosome)
         {
-            var genes = (Point[])chromosome.Genes.Clone();
+            var mutant = chromosome.Clone();
 
-            var index1 = RandomizationProvider.random.Next(chromosome.Length);
-            var index2 = RandomizationProvider.random.Next(chromosome.Length);
-            var gene1 = genes[index1];
-            var gene2 = genes[index2];
+            var index1 = RandomizationProvider.random.Next(mutant.Length);
+            var index2 = RandomizationProvider.random.Next(mutant.Length);
+            var gene1 = mutant.GetGene(index1);
+            var gene2 = mutant.GetGene(index2);
 
-            genes[index1] = gene2;
-            genes[index2] = gene1;
-
-            var mutant = new RouteChromosome(chromosome.Home, genes);
+            mutant.ReplaceGene(index1, gene2);
+            mutant.ReplaceGene(index2, gene1);
 
             return mutant;
         }
@@ -50,32 +37,30 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         /// childA  = [ A-l | B-r ]  childB  = [ B-l | A-r ]
         ///                 ^ breaking point (random index)
         /// </remarks>
-        public static void Crossover(RouteChromosome parentA, RouteChromosome parentB,
-            out RouteChromosome childA, out RouteChromosome childB)
+        public static void Crossover(IChromosome parentA, IChromosome parentB,
+            out IChromosome childA, out IChromosome childB)
         {
+            // TODO: replace out parameters w/ an IList<IChromosome> return value
+
             if (parentA.Length != parentB.Length)
             {
-                throw new System.ArgumentException("The number of genes in both parents is unequal.");
+                throw new System.ArgumentException(String.Format("The number of genes in both parents is unequal: {0} != {1}", parentA.Length, parentB.Length));
             }
 
             var length = parentA.Length;
             if (length < 2)
             {
-                throw new System.ArgumentException("The chromosome is too short. There must be at least two genes to use crossover.");
+                throw new System.ArgumentException("The chromosomes are too short. There must be at least two genes to use crossover.");
             }
 
-            var genesA = (Point[])parentA.Genes.Clone();
-            var genesB = (Point[])parentB.Genes.Clone();
             var breakingPoint = RandomizationProvider.random.Next(1, length);
+            var genesA = parentA.GetGenes(breakingPoint, length - 1);
+            var genesB = parentB.GetGenes(breakingPoint, length - 1);
 
-            for (int i = breakingPoint; i < length; ++i)
-            {
-                genesA[i] = parentB.Genes[i];
-                genesB[i] = parentA.Genes[i];
-            }
-
-            childA = new RouteChromosome(parentA.Home, genesA);
-            childB = new RouteChromosome(parentB.Home, genesB);
+            childA = parentA.Clone();
+            childB = parentB.Clone();
+            childA.ReplaceGenes(breakingPoint, genesB);
+            childB.ReplaceGenes(breakingPoint, genesA);
         }
     }
 }
