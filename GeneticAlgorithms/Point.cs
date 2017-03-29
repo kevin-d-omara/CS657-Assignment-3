@@ -75,12 +75,14 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         /// </summary>
         public override bool Equals(object obj)
         {
-            if (obj == null || obj.GetType() != typeof(Point))
+            var otherPoint = obj as Point;
+
+            if (obj == null || otherPoint == null)
             {
                 return false;
             }
 
-            return this == (Point)obj;
+            return this == otherPoint;
         }
 
         /// <summary>
