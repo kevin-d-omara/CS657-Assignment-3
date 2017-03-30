@@ -122,7 +122,7 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
 
             for (int i = 0; i < numNew; ++i)
             {
-                array[startIndex + 1] = elements[i];
+                array[startIndex + i] = elements[i];
             }
         }
     }
