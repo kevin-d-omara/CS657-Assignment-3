@@ -30,18 +30,39 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         public int Size { get; private set; }
 
         /// <summary>
-        /// The number of genes in each chromosome.
+        /// The City to find the shortest route through.
         /// </summary>
-        public int ChromosomeLength { get; private set; }
+        public City TheCity { get; private set; }
 
         /// <summary>
         /// Create a new population with a randomized first generation.
         /// </summary>
-        /// <param name="size">The number of chromosomes in each generation.</param>
-        /// <param name="chromosomeLength">The length of each chromosome.</param>
-        public Population(int size, int chromosomeLength)
+        /// <param name="size">Number of chromosomes in each generation.</param>
+        /// <param name="city">City to find the shortest route through.</param>
+        public Population(int size, City city)
         {
+            Size = size;
+            TheCity = city;
 
+            CreateFirstGeneration();
+        }
+
+        /// <summary>
+        /// Create the first generation of chromosomes.
+        /// </summary>
+        private void CreateFirstGeneration()
+        {
+            var firstChromosomes = new RouteChromosome[Size];
+            for (int i = 0; i < Size; ++i)
+            {
+                firstChromosomes[i] = new RouteChromosome(TheCity.Warehouse,
+                                                          TheCity.GetHomesInRandomOrder());
+            }
+
+            Generations = new List<Generation>();
+            Generations.Add(new Generation(firstChromosomes));
+            GenerationNumber = 1;
+            LatestGeneration = Generations[0];
         }
 
         /// <summary>

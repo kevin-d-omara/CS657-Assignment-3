@@ -41,11 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChromosomeBase.cs" />
+    <Compile Include="City.cs" />
     <Compile Include="Gene.cs" />
     <Compile Include="Generation.cs" />
     <Compile Include="GeneticOperators.cs" />
     <Compile Include="IChromosome.cs" />
     <Compile Include="Point.cs" />
+    <Compile Include="Population.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomizationProvider.cs" />
     <Compile Include="Route.cs" />

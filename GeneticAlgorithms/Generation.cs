@@ -27,10 +27,12 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         /// <summary>
         /// Create a generation from the given set of chromosomes.
         /// </summary>
-        public Generation(List<IChromosome> chromosomes)
+        public Generation(IList<IChromosome> chromosomes)
         {
             Number = chromosomes.Count;
             Chromosomes = chromosomes.ToArray();
+
+            // TODO: calculate FittestChromosome
         }
     }
 }

@@ -10,11 +10,32 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
     {
         public static void Main(string[] args)
         {
-            var myTest = new GenerationTest();
-            myTest.SetUp();
-            myTest.Constructor_ValidParameters();
+            var size = 6;
+            var city = CreateCity();
+            var population = new Population(size, city);
 
             //Console.ReadKey();
+        }
+
+        private static City CreateCity()
+        {
+            var warehouse = new Point(0, 0);
+
+            // Most fit: -27.31
+            var homes = new List<Point>()
+            {
+                new Point(1, 0),
+                new Point(2, 0),
+                new Point(3, 0),
+                new Point(4, 0),
+                new Point(5, 0),
+                new Point(6, 0),
+                new Point(7, 0),
+                new Point(8, 0),
+                new Point(8, 8),
+            };
+
+            return new City(homes, warehouse);
         }
     }
 }
