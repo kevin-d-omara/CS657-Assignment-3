@@ -14,6 +14,12 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
             var city = CreateCity();
             var population = new Population(size, city);
 
+            var limit = 10;
+            for (int i = 0; i < limit; ++i)
+            {
+                population.CreateNextGeneration();
+            }
+
             //Console.ReadKey();
         }
 
