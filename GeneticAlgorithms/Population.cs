@@ -45,18 +45,9 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         public City TheCity { get; private set; }
 
         /// <summary>
-        /// Create a new population with a randomized first generation and default genetic operator
-        /// probabilities.
+        /// Method to select chromosomes for crossover.
         /// </summary>
-        /// <param name="size">Number of chromosomes in each generation.</param>
-        /// <param name="city">City to find the shortest route through.</param>
-        public Population(int size, City city)
-        {
-            Size = size;
-            TheCity = city;
-
-            CreateFirstGeneration();
-        }
+        private ISelection Selector;
 
         /// <summary>
         /// Create a new population with a randomized first generation.
@@ -65,11 +56,19 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         /// <param name="city">City to find the shortest route through.</param>
         /// <param name="crossoverProbability">Percent chance to crossover instead of clone.</param>
         /// <param name="mutationProbability">Percent chance to mutate each child.</param>
+        /// <param name="selection">Method to select chromosomes for crossover.</param>
         public Population(int size, City city,
-            float crossoverProbability, float mutationProbability) : this(size, city)
+            float crossoverProbability, float mutationProbability,
+            ISelection selection)
         {
+            Size = size;
+            TheCity = city;
+
             CrossoverProbability = crossoverProbability;
             MutationProbability = mutationProbability;
+            Selector = selection;
+
+            CreateFirstGeneration();
         }
 
         /// <summary>
@@ -96,13 +95,13 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         public void CreateNextGeneration()
         {
             var newChromosomes = new List<IChromosome>();
+            var parentChromosomes = LatestGeneration.Chromosomes;
 
             while (newChromosomes.Count < Size)
             {
-                // Select pair (via Tournament Selection)
-                // TODO: use tournament selection
-                IChromosome parent1 = LatestGeneration.Chromosomes[0];
-                IChromosome parent2 = LatestGeneration.Chromosomes[1];
+                // Select pair
+                var parent1 = Selector.Select(parentChromosomes);
+                var parent2 = Selector.Select(parentChromosomes);
 
                 // Crossover
                 IChromosome child1, child2;

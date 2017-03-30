@@ -46,12 +46,14 @@
     <Compile Include="Generation.cs" />
     <Compile Include="GeneticOperators.cs" />
     <Compile Include="IChromosome.cs" />
+    <Compile Include="ISelection.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Population.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomizationProvider.cs" />
     <Compile Include="Route.cs" />
     <Compile Include="RouteChromosome.cs" />
+    <Compile Include="TournamentSelection.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

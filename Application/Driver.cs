@@ -10,9 +10,7 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
     {
         public static void Main(string[] args)
         {
-            var size = 6;
-            var city = CreateCity();
-            var population = new Population(size, city);
+            var population = MakePopulation();
 
             var limit = 10;
             for (int i = 0; i < limit; ++i)
@@ -21,6 +19,20 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
             }
 
             //Console.ReadKey();
+        }
+
+        private static Population MakePopulation()
+        {
+            var size = 6;
+            var city = CreateCity();
+
+            var crossoverProbability = 0.70f;
+            var mutationProbability = 0.10f;
+
+            var tournamentSize = 3;
+            var selection = new TournamentSelection(tournamentSize);
+
+            return new Population(size, city, crossoverProbability, mutationProbability, selection);
         }
 
         private static City CreateCity()
