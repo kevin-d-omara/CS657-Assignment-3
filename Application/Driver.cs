@@ -12,13 +12,14 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
         {
             var population = MakePopulation();
 
-            var limit = 10;
+            var limit = 100;
             for (int i = 0; i < limit; ++i)
             {
+                DisplayFitnessOf(population.LatestGeneration, population.GenerationNumber);
                 population.CreateNextGeneration();
             }
 
-            //Console.ReadKey();
+            Console.ReadKey();
         }
 
         private static Population MakePopulation()
@@ -54,6 +55,16 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
             };
 
             return new City(homes, warehouse);
+        }
+
+        private static void DisplayFitnessOf(Generation generation, int generationNumber)
+        {
+            Console.WriteLine("Generation " + generationNumber);
+            Console.WriteLine("Highest Fitness: " + generation.GetMostFitChromosome().Fitness);
+            Console.WriteLine("Average: " + generation.GetAverageFitness());
+            Console.WriteLine("Lowest : " + generation.GetLeastFitChromosome().Fitness);
+            //Console.WriteLine("Candidate Solution: " + generation.GetCandidateChromosome().GetValue());
+            Console.WriteLine("");
         }
     }
 }
