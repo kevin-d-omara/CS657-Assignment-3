@@ -116,13 +116,13 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms.UnitTests
         }
 
         /// <summary>
-        /// A wrapper for GeneticAlgorithms.Crossover(). Boxes and unboxes children so that the
+        /// A wrapper for GeneticAlgorithms.BlindCrossover(). Boxes and unboxes children so that the
         /// function may be called.
         /// </summary>
         private void CrossoverConcrete<T>(T parentA, T parentB, out T childA, out T childB) where T : IChromosome
         {
             IChromosome tmpChildA, tmpChildB;
-            GeneticOperators.Crossover(parentA, parentB, out tmpChildA, out tmpChildB);
+            GeneticOperators.BlindCrossover(parentA, parentB, out tmpChildA, out tmpChildB);
             childA = (T)tmpChildA;
             childB = (T)tmpChildB;
         }

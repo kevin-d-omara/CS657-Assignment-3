@@ -107,8 +107,7 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
                 IChromosome child1, child2;
                 if (RandomizationProvider.random.NextDouble() < CrossoverProbability)
                 {
-                    // TODO: use CrossoverNoDuplicateGenes
-                    GeneticOperators.Crossover(parent1, parent2, out child1, out child2);
+                    GeneticOperators.EntropyCrossover(parent1, parent2, out child1, out child2);
                 }
                 else
                 {
