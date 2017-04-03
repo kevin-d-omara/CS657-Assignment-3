@@ -35,6 +35,11 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         public float MutationProbability { get; set; } = 0.10f;
 
         /// <summary>
+        /// Percent chance to use guided right hand reverse on each child.
+        /// </summary>
+        public float GuidedReverseProbability { get; set; } = 0.10f;
+
+        /// <summary>
         /// Number of chromosomes in each generation.
         /// </summary>
         public int Size { get; private set; }
@@ -127,6 +132,13 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
                     newChromosomes[i] = GeneticOperators.Mutate(newChromosomes[i]);
                 }
             }
+
+            // Reverse most fit chromosome
+            var mostFit = LatestGeneration.GetMostFitChromosome();
+            newChromosomes[0] = mostFit.Clone();
+            newChromosomes[0] = GeneticOperators.GuidedReverse(newChromosomes[0], true);
+            newChromosomes[1] = mostFit.Clone();
+            newChromosomes[1] = GeneticOperators.GuidedReverse(newChromosomes[1], false);
 
             // Add new chromosomes to the next generation.
             var nextGeneration = new Generation(newChromosomes);

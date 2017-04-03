@@ -10,9 +10,11 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
     {
         public static void Main(string[] args)
         {
+            //RandomizationProvider.random = new Random(1);
+
             var population = MakePopulation();
 
-            var limit = 100;
+            var limit = 75;
             for (int i = 0; i < limit; ++i)
             {
                 DisplayFitnessOf(population.LatestGeneration, population.GenerationNumber);
@@ -24,7 +26,7 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
 
         private static Population MakePopulation()
         {
-            var size = 6;
+            var size = 30;
             var city = CreateCity();
 
             var crossoverProbability = 0.70f;

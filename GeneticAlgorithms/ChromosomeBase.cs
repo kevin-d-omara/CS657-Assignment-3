@@ -125,5 +125,34 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
                 array[startIndex + i] = elements[i];
             }
         }
+
+        /// <summary>
+        /// Reverse the order of all genes between index and start or end (inclusive).
+        /// </summary>
+        /// <param name="onRight">True if reversing genes on right side, false if left side.</param>
+        public virtual void ReverseGenes(int index, bool onRight)
+        {
+            if (index < 0 || index >= Length)
+            {
+                throw new System.ArgumentOutOfRangeException("index", index, String.Format("The provided index was out of the range [0, {0}].", Length - 1));
+            }
+
+            Gene[] reversedSegment;
+            if (onRight)
+            {
+                reversedSegment = _genes.Skip(index).Reverse().ToArray();
+                ReplaceGenes(index, reversedSegment);
+            }
+            else
+            {
+                reversedSegment = _genes.Take(index + 1).Reverse().ToArray();
+                ReplaceGenes(0, reversedSegment);
+            }
+        }
+
+        /// <summary>
+        /// Find the pair of adjacent genes with the largest change between them.
+        /// </summary>
+        public abstract int GetIndexOfLargestChange();
     }
 }

@@ -87,12 +87,45 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         }
 
         /// <summary>
+        /// Reverse the order of all genes between index and start or end (inclusive).
+        /// </summary>
+        /// <param name="onRight">True if reversing genes on right side, false if left side.</param>
+        public override void ReverseGenes(int index, bool onRight)
+        {
+            base.ReverseGenes(index, onRight);
+            UpdateRoute();
+        }
+
+        /// <summary>
         /// Update the Route and Fitness based on the current _points and Home.
         /// </summary>
         public void UpdateRoute()
         {
             Route = new Route(Home, _points);
             Fitness = -Route.TotalDistance;
+        }
+
+        /// <summary>
+        /// Find the pair of adjacent genes with the largest distance between them.
+        /// </summary>
+        /// <returns>The index of the first gene in this pair.</returns>
+        public override int GetIndexOfLargestChange()
+        {
+            var length = _genes.Length;
+            var indexOfLargest = 0;
+            var largestDistance = 0f;
+            for (int i = 0; i < length - 1; ++i)
+            {
+                var distance = Point.Distance(_points[i], _points[i + 1]);
+
+                if (distance > largestDistance)
+                {
+                    indexOfLargest = i;
+                    largestDistance = distance;
+                }
+            }
+
+            return indexOfLargest;
         }
     }
 }

@@ -31,7 +31,7 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         Gene GetGene(int index);
 
         /// <summary>
-        ///  Returns the genes between the start and end indices.
+        ///  Returns the genes between the start and end indices (inclusive).
         /// </summary>
         Gene[] GetGenes(int startIndex, int endIndex);
 
@@ -51,5 +51,16 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         /// chromosome's length will be increased).
         /// </summary>
         void ReplaceGenes(int index, Gene[] genes);
+
+        /// <summary>
+        /// Reverse the order of all genes between index and start or end (inclusive).
+        /// </summary>
+        /// <param name="onRight">True if reversing genes on right side, false if left side.</param>
+        void ReverseGenes(int index, bool onRight);
+
+        /// <summary>
+        /// Find the pair of adjacent genes with the largest change between them.
+        /// </summary>
+        int GetIndexOfLargestChange();
     }
 }

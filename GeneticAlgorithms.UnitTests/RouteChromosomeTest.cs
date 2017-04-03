@@ -8,9 +8,9 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms.UnitTests
     [TestFixture]
     public class RouteChromosomeTest
     {
-        RouteChromosome chromo;
+        RouteChromosome chromo, largeChromo;
         Point home;
-        Point[] points;
+        Point[] points, largePoints;
 
         [SetUp]
         public void SetUp()
@@ -24,6 +24,14 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms.UnitTests
             };
 
             chromo = new RouteChromosome(home, points);
+
+            largePoints = new Point[]
+            {
+                new Point(1, 0),
+                new Point(8, 0),
+                new Point(7, 0)
+            };
+            largeChromo = new RouteChromosome(home, largePoints);
         }
 
         [Test]
@@ -42,6 +50,36 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms.UnitTests
 
             Assert.AreEqual(1, chromo.Route.Points[2].x);
             Assert.AreEqual(1, chromo.Route.Points[2].y);
+        }
+
+        [Test]
+        public void GetIndexOfLargestChange()
+        {
+            Assert.IsTrue(0 == largeChromo.GetIndexOfLargestChange());
+        }
+
+        [Test]
+        public void ReverseGenes_OnRight()
+        {
+            var reversedChromosome = largeChromo.Clone();
+            reversedChromosome.ReverseGenes(1, true);
+
+            Assert.AreEqual(new Point(1, 0), reversedChromosome.GetGene(0).value);
+            Assert.AreEqual(new Point(7, 0), reversedChromosome.GetGene(1).value);
+            Assert.AreEqual(new Point(8, 0), reversedChromosome.GetGene(2).value);
+            Assert.AreEqual(largeChromo.Length, reversedChromosome.Length);
+        }
+
+        [Test]
+        public void ReverseGenes_OnLeft()
+        {
+            var reversedChromosome = largeChromo.Clone();
+            reversedChromosome.ReverseGenes(1, false);
+            
+            Assert.AreEqual(new Point(8, 0), reversedChromosome.GetGene(0).value);
+            Assert.AreEqual(new Point(1, 0), reversedChromosome.GetGene(1).value);
+            Assert.AreEqual(new Point(7, 0), reversedChromosome.GetGene(2).value);
+            Assert.AreEqual(largeChromo.Length, reversedChromosome.Length);
         }
     }
 }
