@@ -62,21 +62,26 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
 
         /// <summary>
         /// Create a randomized rectangular city with N homes.
+        /// Fixed to a 30x30 grid with warehouses at (5,5) and (25,25).
         /// </summary>
         private static City CreateCity(int width, int height, int N)
         {
             var occupied = new HashSet<Point>();
-            var point = GetRandomPointIn(width, height);
 
-            occupied.Add(point);
-            var warehouse = point;
+            var pointA = new Point(5, 5);
+            var pointB = new Point(25, 25);
+
+            occupied.Add(pointA);
+            occupied.Add(pointB);
+
+            var warehouses = new List<Point>() { pointA, pointB };
 
             var homes = new List<Point>();
             for (int i = 0; i < N; ++i)
             {
                 while (true)
                 {
-                    point = GetRandomPointIn(width, height);
+                    var point = GetRandomPointIn(width, height);
                     if (!occupied.Contains(point))
                     {
                         occupied.Add(point);
@@ -86,7 +91,7 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
                 }
             }
 
-            return new City(homes, new List<Point>() { warehouse });
+            return new City(homes, warehouses);
         }
 
         /// <summary>

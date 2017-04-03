@@ -22,10 +22,10 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         /// <summary>
         /// Create a new city with the given homes and warehouse locations.
         /// </summary>
-        public City(IList<Point> homes, IList<Point> warehouse)
+        public City(IList<Point> homes, IList<Point> warehouses)
         {
             Homes = homes.ToArray();
-            Warehouses = warehouse.ToArray();
+            Warehouses = warehouses.ToArray();
         }
 
         /// <summary>
