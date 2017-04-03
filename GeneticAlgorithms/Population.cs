@@ -22,7 +22,7 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         /// <summary>
         /// Number of generations.
         /// </summary>
-        public int GenerationNumber { get; private set; }
+        public int GenerationNumber { get { return Generations.Count; } }
 
         /// <summary>
         /// Percent chance to use crossover instead of clone. [0f, 1f)
@@ -85,7 +85,6 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
 
             Generations = new List<Generation>();
             Generations.Add(new Generation(firstChromosomes));
-            GenerationNumber = 1;
             LatestGeneration = Generations[0];
         }
 
