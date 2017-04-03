@@ -10,37 +10,47 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
     {
         public static void Main(string[] args)
         {
-            var GA = CreateGeneticAlgorithm();
+            int numberOfHomes = 30;
+            City cityA, cityB;
+            CreateCity(numberOfHomes, out cityA, out cityB);
+            var GeneticA = CreateGeneticAlgorithm(cityA);
+            var GeneticB = CreateGeneticAlgorithm(cityB);
 
             // Evolve solution for a single run.
-            GA.EvolveSolution();
+            GeneticA.EvolveSolution();
+            GeneticB.EvolveSolution();
 
             // Print summary of each generation.
-            for (int i = 0; i < GA.population.GenerationNumber; ++i)
+            for (int i = 0; i < GeneticA.population.GenerationNumber; ++i)
             {
-                var generation = GA.population.Generations[i];
-                DisplayFitnessOf(generation, i);
+                var generation = GeneticA.population.Generations[i];
+                //DisplayFitnessOf(generation, i);
             }
 
             // Print solution to file.
-            var outfile = "Results.txt";
-            var fittestChromosome = GA.population.LatestGeneration.GetMostFitChromosome();
-            var route = ((RouteChromosome)fittestChromosome).Route;
-            PrintRoute(route, outfile);
+            var outfileA = "ResultsA.txt";
+            var outfileB = "ResultsB.txt";
+            var fittestChromosomeA = GeneticA.population.LatestGeneration.GetMostFitChromosome();
+            var fittestChromosomeB = GeneticB.population.LatestGeneration.GetMostFitChromosome();
+            var routeA = ((RouteChromosome)fittestChromosomeA).Route;
+            var routeB = ((RouteChromosome)fittestChromosomeB).Route;
+            PrintRoute(routeA, outfileA);
+            PrintRoute(routeB, outfileB);
 
             // Print best solution from run.
             Console.WriteLine("----------------------------------------------------");
-            Console.WriteLine("Most fit chromosome of run: " + GA.CandidateSolution.Fitness);
+            Console.WriteLine("Most fit chromosomeA of run: " + GeneticA.CandidateSolution.Fitness);
+            Console.WriteLine("Most fit chromosomeB of run: " + GeneticB.CandidateSolution.Fitness);
 
-            Console.ReadKey();
+            //Console.ReadKey();
         }
 
         /// <summary>
         /// Return a new genetic algorithm from the hard coded values in this function.
         /// </summary>
-        private static GeneticAlgorithm CreateGeneticAlgorithm()
+        private static GeneticAlgorithm CreateGeneticAlgorithm(City city)
         {
-            var sizeOfPopulation = 300;
+            var sizeOfPopulation = 100;
             var numberOfGenerations = 200;
 
             var crossoverProbability = 0.70f;
@@ -48,11 +58,6 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
 
             var tournamentSize = 3;
             var selector = new TournamentSelection(tournamentSize);
-
-            var width = 30;
-            var height = 30;
-            var numberOfHomes = 30;
-            var city = CreateCity(width, height, numberOfHomes);
 
             var population = new OneAgentPopulation(sizeOfPopulation, city,
                 crossoverProbability, mutationProbability, selector);
@@ -64,18 +69,24 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
         /// Create a randomized rectangular city with N homes.
         /// Fixed to a 30x30 grid with warehouses at (5,5) and (25,25).
         /// </summary>
-        private static City CreateCity(int width, int height, int N)
+        /// <param name="N">Number of randomly placed homes.</param>
+        /// <param name="cityA">City with warehouse A and homes closer to A.</param>
+        /// <param name="cityB">City with warehouse B and homes closer to B.</param>
+        private static void CreateCity(int N, out City cityA, out City cityB)
         {
-            var occupied = new HashSet<Point>();
+            var width = 30;
+            var height = 30;
 
+            var occupied = new HashSet<Point>();
             var pointA = new Point(5, 5);
             var pointB = new Point(25, 25);
-
             occupied.Add(pointA);
             occupied.Add(pointB);
 
-            var warehouses = new List<Point>() { pointA, pointB };
+            var warehouseA = new List<Point>() { pointA };
+            var warehouseB = new List<Point>() { pointB };
 
+            // Make N random homes.
             var homes = new List<Point>();
             for (int i = 0; i < N; ++i)
             {
@@ -91,7 +102,11 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
                 }
             }
 
-            return new City(homes, warehouses);
+            List<Point> closerToA, closerToB;
+            Point.GetPointsCloserTo(pointA, pointB, homes.ToArray(), out closerToA, out closerToB);
+
+            cityA = new City(closerToA, warehouseA);
+            cityB = new City(closerToB, warehouseB);
         }
 
         /// <summary>

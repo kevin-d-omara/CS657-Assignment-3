@@ -62,7 +62,7 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
                 var distanceToA = Point.Distance(A, point);
                 var distanceToB = Point.Distance(B, point);
 
-                if (distanceToA >= distanceToB)
+                if (distanceToA <= distanceToB)
                 {
                     closerToA.Add(point);
                 }
