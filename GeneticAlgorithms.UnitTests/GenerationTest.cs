@@ -8,7 +8,7 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms.UnitTests
     [TestFixture]
     public class GenerationTest
     {
-        Generation generation;
+        //Generation generation;
         List<RouteChromosome> chromosomeList = new List<RouteChromosome>();
 
         RouteChromosome chromoA, chromoB;

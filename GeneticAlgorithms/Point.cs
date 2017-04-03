@@ -49,6 +49,30 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
             return randomPoints;
         }
 
+        /// <summary>
+        /// Divide the points into two collections, one closer to A and the other closer to B.
+        /// </summary>
+        public static void GetPointsCloserTo(Point A, Point B, Point[] points,
+            out List<Point> closerToA, out List<Point> closerToB)
+        {
+            closerToA = new List<Point>();
+            closerToB = new List<Point>();
+            foreach (Point point in points)
+            {
+                var distanceToA = Point.Distance(A, point);
+                var distanceToB = Point.Distance(B, point);
+
+                if (distanceToA >= distanceToB)
+                {
+                    closerToA.Add(point);
+                }
+                else
+                {
+                    closerToB.Add(point);
+                }
+            }
+        }
+
         // Overriden operators (make comparison by value, not reference) ---------------------------
 
         /// <summary>

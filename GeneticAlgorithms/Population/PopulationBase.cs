@@ -52,6 +52,54 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         /// <summary>
         /// Create the next generation of chromosomes from the latest generation.
         /// </summary>
-        public abstract void CreateNextGeneration();
+        public void CreateNextGeneration()
+        {
+            var newChromosomes = new List<IChromosome>();
+            var parentChromosomes = LatestGeneration.Chromosomes;
+
+            while (newChromosomes.Count < Size)
+            {
+                // Select pair
+                var parent1 = Selector.Select(parentChromosomes);
+                var parent2 = Selector.Select(parentChromosomes);
+
+                // Crossover
+                IChromosome child1, child2;
+                if (RandomizationProvider.random.NextDouble() < CrossoverProbability)
+                {
+                    GeneticOperators.EntropyCrossover(parent1, parent2, out child1, out child2);
+                }
+                else
+                {
+                    child1 = parent1.Clone();
+                    child2 = parent2.Clone();
+                }
+
+                // Add to newChromosomes
+                newChromosomes.Add(child1);
+                newChromosomes.Add(child2);
+            }
+
+            // Mutation
+            for (int i = 0; i < Size; ++i)
+            {
+                if (RandomizationProvider.random.NextDouble() < MutationProbability)
+                {
+                    newChromosomes[i] = GeneticOperators.Mutate(newChromosomes[i]);
+                }
+            }
+
+            // Reverse most fit chromosome
+            var mostFit = LatestGeneration.GetMostFitChromosome();
+            newChromosomes[0] = mostFit.Clone();
+            newChromosomes[0] = GeneticOperators.GuidedReverse(newChromosomes[0], true);
+            newChromosomes[1] = mostFit.Clone();
+            newChromosomes[1] = GeneticOperators.GuidedReverse(newChromosomes[1], false);
+
+            // Add new chromosomes to the next generation.
+            var nextGeneration = new Generation(newChromosomes);
+            Generations.Add(nextGeneration);
+            LatestGeneration = nextGeneration;
+        }
     }
 }
