@@ -35,7 +35,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Driver.cs" />
+    <Compile Include="Main.cs" />
+    <Compile Include="OneAgentDriver.cs" />
+    <Compile Include="TwoAgentDriver.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GeneticAlgorithms.UnitTests\GeneticAlgorithms.UnitTests.csproj">

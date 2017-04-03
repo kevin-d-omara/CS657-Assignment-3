@@ -9,8 +9,8 @@ for i=1:size(Results,1)-1
 end
 
 hold on;
-quiver(points(:,1), points(:,2), arrows(:,1), arrows(:,2), 'go', 'LineWidth', 2);
-plot(Results(:,1), Results(:,2), 'b--');
+quiver(points(:,1), points(:,2), arrows(:,1), arrows(:,2), 'bo', 'LineWidth', 2);
+plot(Results(:,1), Results(:,2), 'k--');
 plot(Results(1,1), Results(1,2), 'ro', 'LineWidth', 3);
 xlim([0 30])
 ylim([0 30])

@@ -55,6 +55,7 @@
     <Compile Include="Route.cs" />
     <Compile Include="RouteChromosome.cs" />
     <Compile Include="TournamentSelection.cs" />
+    <Compile Include="TwoAgentPopulation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

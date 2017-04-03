@@ -6,49 +6,87 @@ using KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms.UnitTests;
 
 namespace KevinDOMara.SDSU.CS657.Assignment3.Application
 {
-    public class Driver
+    public class MainProgram
     {
         public static void Main(string[] args)
         {
-            //RandomizationProvider.random = new Random(1);
+            // Genetic algorithm parameters --------------------------------------------------------
+            var sizeOfPopulation = 300;
+            var numberOfGenerations = 200;
 
-            var population = MakePopulation();
-
-            var limit = 200;
-            for (int i = 0; i < limit; ++i)
-            {
-                DisplayFitnessOf(population.LatestGeneration, population.GenerationNumber);
-                population.CreateNextGeneration();
-            }
-
-            PrintRoute(((RouteChromosome)(population.LatestGeneration.GetMostFitChromosome())).Route, "Results.txt");
-
-            Console.ReadKey();
-        }
-
-        private static OneAgentPopulation MakePopulation()
-        {
-            var size = 300;
-
-            var numberOfHomes = 30;
             var width = 30;
             var height = 30;
+            var numberOfHomes = 30;
             var city = CreateCity(width, height, numberOfHomes);
 
             var crossoverProbability = 0.70f;
             var mutationProbability = 0.50f;
 
             var tournamentSize = 3;
-            var selection = new TournamentSelection(tournamentSize);
+            var selector = new TournamentSelection(tournamentSize);
+            // -------------------------------------------------------------------------------------
 
-            return new OneAgentPopulation(size, city, crossoverProbability, mutationProbability, selection);
+            // Create driver for a single run.
+            var driver = new OneAgentDriver(sizeOfPopulation, numberOfGenerations, city,
+                crossoverProbability, mutationProbability, selector);
+
+            // Evolve solution for a single run.
+            driver.EvolveSolution();
+
+            // Print summary of each generation.
+            for (int i = 0; i < driver.population.GenerationNumber; ++i)
+            {
+                var generation = driver.population.Generations[i];
+                DisplayFitnessOf(generation, i);
+            }
+
+            // Print solution to file.
+            var outfile = "Results.txt";
+            var fittestChromosome = driver.population.LatestGeneration.GetMostFitChromosome();
+            var route = ((RouteChromosome)fittestChromosome).Route;
+            PrintRoute(route, outfile);
+
+            Console.ReadKey();
         }
 
+        /// <summary>
+        /// Create a randomized rectangular city with N homes.
+        /// </summary>
+        private static City CreateCity(int width, int height, int N)
+        {
+            var occupied = new HashSet<Point>();
+            var point = GetRandomPointIn(width, height);
+
+            occupied.Add(point);
+            var warehouse = point;
+
+            var homes = new List<Point>();
+            for (int i = 0; i < N; ++i)
+            {
+                while (true)
+                {
+                    point = GetRandomPointIn(width, height);
+                    if (!occupied.Contains(point))
+                    {
+                        occupied.Add(point);
+                        homes.Add(point);
+                        break;
+                    }
+                }
+            }
+
+            return new City(homes, new List<Point>() { warehouse });
+        }
+
+        /// <summary>
+        /// Create a fixed city for testing.
+        /// </summary>
+        /// <returns></returns>
         private static City CreateCity()
         {
             var warehouse = new Point(0, 0);
 
-            // Most fit: -27.31
+            // Most fit chromosome: -27.31
             var homes = new List<Point>()
             {
                 new Point(1, 0),
@@ -65,32 +103,9 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
             return new City(homes, new List<Point>() { warehouse });
         }
 
-        private static City CreateCity(int width, int height, int N)
-        {
-            var occupied = new HashSet<Point>();
-            var point = GetRandomPointIn(width, height);
-
-            occupied.Add(point);
-            var warehouse = point;
-
-            var homes = new List<Point>();
-            for (int i = 0; i < N; ++i)
-            {
-                while(true)
-                {
-                    point = GetRandomPointIn(width, height);
-                    if (!occupied.Contains(point))
-                    {
-                        occupied.Add(point);
-                        homes.Add(point);
-                        break;
-                    }
-                }
-            }
-
-            return new City(homes, new List<Point>() { warehouse });
-        }
-
+        /// <summary>
+        /// Return a random point within the rectangle defined by (0,0) to (width, height).
+        /// </summary>
         private static Point GetRandomPointIn(int width, int height)
         {
             var x = RandomizationProvider.random.Next(0, width + 1);
