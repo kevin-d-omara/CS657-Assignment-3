@@ -62,7 +62,7 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
                 new Point(8, 8),
             };
 
-            return new City(homes, warehouse);
+            return new City(homes, new List<Point>() { warehouse });
         }
 
         private static City CreateCity(int width, int height, int N)
@@ -88,7 +88,7 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
                 }
             }
 
-            return new City(homes, warehouse);
+            return new City(homes, new List<Point>() { warehouse });
         }
 
         private static Point GetRandomPointIn(int width, int height)

@@ -84,7 +84,7 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
             var firstChromosomes = new RouteChromosome[Size];
             for (int i = 0; i < Size; ++i)
             {
-                firstChromosomes[i] = new RouteChromosome(TheCity.Warehouse,
+                firstChromosomes[i] = new RouteChromosome(TheCity.Warehouses[0],
                                                           TheCity.GetHomesInRandomOrder());
             }
 

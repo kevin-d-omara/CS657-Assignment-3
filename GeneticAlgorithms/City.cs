@@ -17,15 +17,15 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         /// <summary>
         /// Location of the warehouse.
         /// </summary>
-        public Point Warehouse { get; private set; }
+        public Point[] Warehouses { get; private set; }
 
         /// <summary>
         /// Create a new city with the given homes and warehouse locations.
         /// </summary>
-        public City(IList<Point> homes, Point warehouse)
+        public City(IList<Point> homes, IList<Point> warehouse)
         {
             Homes = homes.ToArray();
-            Warehouse = warehouse;
+            Warehouses = warehouse.ToArray();
         }
 
         /// <summary>
