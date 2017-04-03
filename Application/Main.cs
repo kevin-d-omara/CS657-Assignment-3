@@ -37,6 +37,11 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
             PrintRoute(routeA, outfileA);
             PrintRoute(routeB, outfileB);
 
+            // Print avg/best to files
+            var outfileAvg = "ResultsAvg.txt";
+            var outfileMax = "ResultsMax.txt";
+            PrintGenerationFitness(outfileAvg, outfileMax, GeneticA.population, GeneticB.population);
+
             // Print best solution from run.
             Console.WriteLine("----------------------------------------------------");
             Console.WriteLine("Most fit chromosomeA of run: " + GeneticA.CandidateSolution.Fitness);
@@ -50,11 +55,11 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
         /// </summary>
         private static GeneticAlgorithm CreateGeneticAlgorithm(City city)
         {
-            var sizeOfPopulation = 100;
-            var numberOfGenerations = 200;
+            var sizeOfPopulation = 12;
+            var numberOfGenerations = 300;
 
             var crossoverProbability = 0.70f;
-            var mutationProbability = 0.50f;
+            var mutationProbability = 0.10f;
 
             var tournamentSize = 3;
             var selector = new TournamentSelection(tournamentSize);
@@ -162,6 +167,25 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
                 lines[i] = route.Points[i].x.ToString() + ", " + route.Points[i].y.ToString();
             }
             System.IO.File.WriteAllLines(filename, lines);
+        }
+
+        /// <summary>
+        /// Print the combined fitness of A and B for each generation.
+        /// </summary>
+        private static void PrintGenerationFitness(string filenameAvg, string filenameMax,
+            PopulationBase A, PopulationBase B)
+        {
+            string[] linesAvg = new string[A.GenerationNumber];
+            string[] linesMax = new string[A.GenerationNumber];
+            for (int i = 0; i < A.GenerationNumber; ++i)
+            {
+                linesAvg[i] = (A.Generations[i].GetAverageFitness()
+                             + B.Generations[i].GetAverageFitness()).ToString();
+                linesMax[i] = (A.Generations[i].GetMostFitChromosome().Fitness
+                             + B.Generations[i].GetMostFitChromosome().Fitness).ToString();
+            }
+            System.IO.File.WriteAllLines(filenameAvg, linesAvg);
+            System.IO.File.WriteAllLines(filenameMax, linesMax);
         }
     }
 }
