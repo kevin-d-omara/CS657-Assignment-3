@@ -10,43 +10,54 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
     {
         public static void Main(string[] args)
         {
-            // Genetic algorithm parameters --------------------------------------------------------
+            var GA = CreateGeneticAlgorithm();
+
+            // Evolve solution for a single run.
+            GA.EvolveSolution();
+
+            // Print summary of each generation.
+            for (int i = 0; i < GA.population.GenerationNumber; ++i)
+            {
+                var generation = GA.population.Generations[i];
+                DisplayFitnessOf(generation, i);
+            }
+
+            // Print solution to file.
+            var outfile = "Results.txt";
+            var fittestChromosome = GA.population.LatestGeneration.GetMostFitChromosome();
+            var route = ((RouteChromosome)fittestChromosome).Route;
+            PrintRoute(route, outfile);
+
+            // Print best solution from run.
+            Console.WriteLine("----------------------------------------------------");
+            Console.WriteLine("Most fit chromosome of run: " + GA.CandidateSolution.Fitness);
+
+            Console.ReadKey();
+        }
+
+        /// <summary>
+        /// Return a new genetic algorithm from the hard coded values in this function.
+        /// </summary>
+        private static GeneticAlgorithm CreateGeneticAlgorithm()
+        {
             var sizeOfPopulation = 300;
             var numberOfGenerations = 200;
-
-            var width = 30;
-            var height = 30;
-            var numberOfHomes = 30;
-            var city = CreateCity(width, height, numberOfHomes);
 
             var crossoverProbability = 0.70f;
             var mutationProbability = 0.50f;
 
             var tournamentSize = 3;
             var selector = new TournamentSelection(tournamentSize);
-            // -------------------------------------------------------------------------------------
 
-            // Create driver for a single run.
-            var driver = new OneAgentDriver(sizeOfPopulation, numberOfGenerations, city,
+            var width = 30;
+            var height = 30;
+            var numberOfHomes = 30;
+            var city = CreateCity(width, height, numberOfHomes);
+
+            var population = new OneAgentPopulation(sizeOfPopulation, city,
                 crossoverProbability, mutationProbability, selector);
 
-            // Evolve solution for a single run.
-            driver.EvolveSolution();
-
-            // Print summary of each generation.
-            for (int i = 0; i < driver.population.GenerationNumber; ++i)
-            {
-                var generation = driver.population.Generations[i];
-                DisplayFitnessOf(generation, i);
-            }
-
-            // Print solution to file.
-            var outfile = "Results.txt";
-            var fittestChromosome = driver.population.LatestGeneration.GetMostFitChromosome();
-            var route = ((RouteChromosome)fittestChromosome).Route;
-            PrintRoute(route, outfile);
-
-            Console.ReadKey();
+            return new GeneticAlgorithm(numberOfGenerations, population);
         }
 
         /// <summary>

@@ -40,22 +40,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChromosomeBase.cs" />
+    <Compile Include="Chromosome\ChromosomeBase.cs" />
     <Compile Include="City.cs" />
-    <Compile Include="Gene.cs" />
-    <Compile Include="Generation.cs" />
+    <Compile Include="Chromosome\Gene.cs" />
+    <Compile Include="GeneticAlgorithm.cs" />
+    <Compile Include="Population\Generation.cs" />
     <Compile Include="GeneticOperators.cs" />
-    <Compile Include="IChromosome.cs" />
-    <Compile Include="ISelection.cs" />
+    <Compile Include="Chromosome\IChromosome.cs" />
+    <Compile Include="Selection\ISelection.cs" />
     <Compile Include="Point.cs" />
-    <Compile Include="OneAgentPopulation.cs" />
-    <Compile Include="PopulationBase.cs" />
+    <Compile Include="Population\OneAgentPopulation.cs" />
+    <Compile Include="Population\PopulationBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomizationProvider.cs" />
     <Compile Include="Route.cs" />
-    <Compile Include="RouteChromosome.cs" />
-    <Compile Include="TournamentSelection.cs" />
-    <Compile Include="TwoAgentPopulation.cs" />
+    <Compile Include="Chromosome\RouteChromosome.cs" />
+    <Compile Include="Selection\TournamentSelection.cs" />
+    <Compile Include="Population\TwoAgentPopulation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
