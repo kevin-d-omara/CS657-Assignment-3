@@ -26,7 +26,7 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
             Console.ReadKey();
         }
 
-        private static Population MakePopulation()
+        private static OneAgentPopulation MakePopulation()
         {
             var size = 300;
 
@@ -41,7 +41,7 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
             var tournamentSize = 3;
             var selection = new TournamentSelection(tournamentSize);
 
-            return new Population(size, city, crossoverProbability, mutationProbability, selection);
+            return new OneAgentPopulation(size, city, crossoverProbability, mutationProbability, selection);
         }
 
         private static City CreateCity()

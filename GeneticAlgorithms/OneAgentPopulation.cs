@@ -5,54 +5,15 @@ using System.Linq;
 namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
 {
     /// <summary>
-    /// A set of generations.
+    /// A set of generations of chromosomes for the one-agent delivery / travelling salesman
+    /// problem.
     /// </summary>
-    public class Population
+    public class OneAgentPopulation : PopulationBase
     {
-        /// <summary>
-        /// The set of generations.
-        /// </summary>
-        public List<Generation> Generations { get; private set; }
-
-        /// <summary>
-        /// Youngest generation.
-        /// </summary>
-        public Generation LatestGeneration { get; private set; }
-
-        /// <summary>
-        /// Number of generations.
-        /// </summary>
-        public int GenerationNumber { get { return Generations.Count; } }
-
-        /// <summary>
-        /// Percent chance to use crossover instead of clone. [0f, 1f)
-        /// </summary>
-        public float CrossoverProbability { get; set; } = 0.70f;
-
-        /// <summary>
-        /// Percent chance to mutate each child. [0f, 1f)
-        /// </summary>
-        public float MutationProbability { get; set; } = 0.10f;
-
-        /// <summary>
-        /// Percent chance to use guided right hand reverse on each child.
-        /// </summary>
-        public float GuidedReverseProbability { get; set; } = 0.10f;
-
-        /// <summary>
-        /// Number of chromosomes in each generation.
-        /// </summary>
-        public int Size { get; private set; }
-
         /// <summary>
         /// The City to find the shortest route through.
         /// </summary>
         public City TheCity { get; private set; }
-
-        /// <summary>
-        /// Method to select chromosomes for crossover.
-        /// </summary>
-        private ISelection Selector;
 
         /// <summary>
         /// Create a new population with a randomized first generation.
@@ -62,9 +23,8 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         /// <param name="crossoverProbability">Percent chance to crossover instead of clone.</param>
         /// <param name="mutationProbability">Percent chance to mutate each child.</param>
         /// <param name="selection">Method to select chromosomes for crossover.</param>
-        public Population(int size, City city,
-            float crossoverProbability, float mutationProbability,
-            ISelection selection)
+        public OneAgentPopulation(int size, City city,
+            float crossoverProbability, float mutationProbability, ISelection selection)
         {
             Size = size;
             TheCity = city;
@@ -79,7 +39,7 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         /// <summary>
         /// Create the first generation of chromosomes.
         /// </summary>
-        private void CreateFirstGeneration()
+        protected override void CreateFirstGeneration()
         {
             var firstChromosomes = new RouteChromosome[Size];
             for (int i = 0; i < Size; ++i)
@@ -96,7 +56,7 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         /// <summary>
         /// Create the next generation of chromosomes from the latest generation.
         /// </summary>
-        public void CreateNextGeneration()
+        public override void CreateNextGeneration()
         {
             var newChromosomes = new List<IChromosome>();
             var parentChromosomes = LatestGeneration.Chromosomes;
