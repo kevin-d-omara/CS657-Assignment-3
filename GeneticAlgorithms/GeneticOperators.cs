@@ -163,26 +163,6 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.GeneticAlgorithms
         }
 
         /// <summary>
-        /// Return a shallow copy with the order of all genes reversed starting at a random index.
-        /// </summary>
-        /// <remarks>
-        /// chromosome = [a b f e d c]
-        ///                   ^ random index
-        ///            = [a b c d e f]
-        ///                   | ← → | reversed the order of these genes
-        /// </remarks>
-        /// <param name="onRight">True if reversing genes on right side, false if left side.</param>
-        public static IChromosome RightHandReverse(IChromosome chromosome, bool onRight)
-        {
-            var reversedChromosome = chromosome.Clone();
-
-            var index = RandomizationProvider.random.Next(0, chromosome.Length);
-            reversedChromosome.ReverseGenes(index, onRight);
-
-            return reversedChromosome;
-        }
-
-        /// <summary>
         /// Return a shallow copy with the order of all genes reversed beyond a pivot where the two
         /// adjacent genes have the largest change between them.
         /// </summary>

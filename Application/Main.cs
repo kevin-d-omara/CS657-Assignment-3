@@ -44,8 +44,8 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
 
             // Print best solution from run.
             Console.WriteLine("----------------------------------------------------");
-            Console.WriteLine("Most fit chromosomeA of run: " + GeneticA.CandidateSolution.Fitness);
-            Console.WriteLine("Most fit chromosomeB of run: " + GeneticB.CandidateSolution.Fitness);
+            Console.WriteLine("Most fit chromosome for truck A: " + GeneticA.CandidateSolution.Fitness);
+            Console.WriteLine("Most fit chromosome for truck B: " + GeneticB.CandidateSolution.Fitness);
 
             //Console.ReadKey();
         }
@@ -55,11 +55,11 @@ namespace KevinDOMara.SDSU.CS657.Assignment3.Application
         /// </summary>
         private static GeneticAlgorithm CreateGeneticAlgorithm(City city)
         {
-            var sizeOfPopulation = 12;
-            var numberOfGenerations = 300;
+            var sizeOfPopulation = 100;
+            var numberOfGenerations = 150;
 
             var crossoverProbability = 0.70f;
-            var mutationProbability = 0.10f;
+            var mutationProbability = 0.50f;
 
             var tournamentSize = 3;
             var selector = new TournamentSelection(tournamentSize);
